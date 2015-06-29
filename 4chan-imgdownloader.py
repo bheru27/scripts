@@ -1,8 +1,12 @@
 #!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+# Bryan Hernandez -- @Bheru27
 
 import json
 import urllib2
 import wget
+import os
+import shutil
 
 class Downloader(object):
     media = []
@@ -10,10 +14,10 @@ class Downloader(object):
     board = ''
     folder = ''
 
-    def __init__(self, board, number, folder):
+    def __init__(self, board, number):
         self.thread = str(number)
         self.board = board
-        self.folder = folder
+        self.folder = "/home/user/Docs/4chan/"+board+"_"+str(number) #Change "user" and "docs" for any folder
 
     def img_get(self):
 
@@ -35,23 +39,33 @@ class Downloader(object):
     def img_download(self):
         if not self.media:
             self.img_get()
-        links = []
+        links = [] 
+        os.mkdir(self.folder)
         for pictures in self.media:
             links.append("http://i.4cdn.org/"+ self.board + "/" + pictures)
         try:
             for url in links:
-                print "Downloading: " + url
-                wget.download(url)
+                print "Downloading: " + url +"\n"
+                print "File %i of %i" %(links.index(url), len(links))
+                filename = wget.download(url)
+                shutil.move(filename, self.folder+"/"+filename) 
         except KeyboardInterrupt:
             return "Canceled"
         return "OK"
 
 
 if __name__ == "__main__":
-    board = raw_input("Enter board: ")
-    thread = str(raw_input("Enter thread number: "))
-    path = raw_input("Enter path to download files: ")
-    test = Downloader(board, thread, path)
-    test.img_download()
+    try:
+        board = raw_input("Enter board: ")
+        thread = str(raw_input("Enter thread number: "))
+       # path =raw_input("Enter path to download files: ")
+        download = Downloader(board, thread)
+        download.img_download()
+        raw_input()
+        os.system("clear")
+    except KeyboardInterrupt:
+        print "Canceled"
+        exit()
+ 
 
 
