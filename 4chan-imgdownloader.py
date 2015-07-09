@@ -17,7 +17,7 @@ class Downloader(object):
     def __init__(self, board, number):
         self.thread = str(number)
         self.board = board
-        self.folder = "/home/user/Docs/4chan/"+board+"_"+str(number) #Change "user" and "docs" for any existing folder where it will be stored folder
+        self.folder = "/home/user/Docs/4chan/"+board+"_"+str(number) #Change "user" and "docs" for any existing folder where it will be stored
 
     def img_get(self):
 
@@ -58,7 +58,8 @@ if __name__ == "__main__":
     try:
         board = raw_input("Enter board: ")
         thread = str(raw_input("Enter thread number: "))
-       #Working on letting the user select the path =raw_input("Enter path to download files: ")
+        #Working on letting the user select the path... 
+        #path=raw_input("Enter path to download files: ")
         download = Downloader(board, thread)
         download.img_download() 
     except KeyboardInterrupt:
