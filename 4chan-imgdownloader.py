@@ -32,7 +32,9 @@ class Downloader(object):
         pictures = []
         for x in xrange(len(results['posts'])):
             if 'tim' in results['posts'][x]:
-                pictures.append(str(results['posts'][x]['tim'])+results['posts'][x]['ext'])
+                file = str(results['posts'][x]['tim'])+results['posts'][x]['ext']
+                if file not in pictures:
+                    pictures.append(file)
         self.media = pictures
         return "OK"
 
