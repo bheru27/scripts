@@ -60,7 +60,7 @@ class Downloader(object):
             if picture not in self.downloaded:
                 try:
                     print "Downloading " + picture
-                    filename = wget.download("http://i.4cdn.org/"+ self.board + "/" + picture)
+                    filename = wget.download("http://i.4cdn.org/{}/{}".format(self.board, picture))
                     shutil.move(filename, str(self.folder[1])+"/"+filename)
                     self.downloaded.append(picture)
                     print "\n"
